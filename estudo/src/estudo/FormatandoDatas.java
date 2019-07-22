@@ -23,11 +23,13 @@ public class FormatandoDatas {
 		LocalDateTime intervalo;
 		LocalDateTime retorno;
 		LocalDateTime saida;
-		LocalTime totalHorasExtras = LocalTime.of(0, 0);
 	
 		try {
 			//Lendo arquivo
-			CSVReader csvReader = lerArquivoCSV();
+			Path caminho = Paths.get(System.getProperty("user.home"), "Documents/Processing/ponto/registros.csv");
+			
+			Reader reader = Files.newBufferedReader(caminho);
+	        CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build();
 
 	        List<String[]> registros = csvReader.readAll(); // lê os registros do arquivo
 	        
@@ -62,19 +64,13 @@ public class FormatandoDatas {
 	            	horasExtras = LocalTime.of(0, 0);
 	            }else {
 	            	horasExtras = tempoReal.minusHours(8);
-	            	totalHorasExtras = calcularHorasExtras(totalHorasExtras, horasExtras);
 	            }
 	            
 	            System.out.println("Tempo total nominal:         " + tempoTotal);
 	            System.out.println("Tempo total menos intervalo: " + tempoReal);
 	            System.out.println("Horas extras:                " + horasExtras);
-	            System.out.println("-------------------------------------------------------------------------------------------");
+	            System.out.println("---------------------------------------");
 	    	}
-	        
-	        
-	        System.out.println("=======================================");
-	        System.out.println("Total Horas Extras: " + totalHorasExtras);
-	        System.out.println("=======================================");
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -84,20 +80,6 @@ public class FormatandoDatas {
 		
 	    
 	    
-	}
-
-	public static LocalTime calcularHorasExtras(LocalTime totalHorasExtras, LocalTime horasExtras) {
-		totalHorasExtras = totalHorasExtras.plusHours(horasExtras.getHour());
-		totalHorasExtras = totalHorasExtras.plusMinutes(horasExtras.getMinute());
-		return totalHorasExtras;
-	}
-
-	public static CSVReader lerArquivoCSV() throws IOException {
-		Path caminho = Paths.get(System.getProperty("user.home"), "Documents/Processing/ponto/registros.csv");
-		
-		Reader reader = Files.newBufferedReader(caminho);
-		CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build();
-		return csvReader;
 	}
 
 	public static void imprimirLinhaArquivoCSV(String[] registro) {
