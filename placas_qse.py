@@ -1,4 +1,4 @@
-# coding: latin-1
+# -*- coding: utf-8 -*-
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
@@ -6,9 +6,9 @@ from bs4 import BeautifulSoup
 list = []
 dict = {}
 
-arq = open('/tmp/lista_qse.txt', 'w')
+arq = open('C:/Users/03906332403/git/mafaldaPy/lista_qse_1000_1999.txt', 'w')
 
-for i in range(10000):
+for i in range(1000, 1999, 1):
     placa = str("%04d"%i)
 
     link = "http://wsdetran.pb.gov.br/DT_DUT_CLIENTE/ConsultaDUT?display=web&placa=QSE" + placa
